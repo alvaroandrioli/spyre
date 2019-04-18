@@ -1,5 +1,5 @@
 import matplotlib
-matplotlib.use('Agg')
+matplotlib.use('agg')
 
 import os
 import os.path
@@ -134,6 +134,7 @@ class Root(object):
         self.templateVars['document_ready_js'] = ""
         self.templateVars['js'] = v.getJS()
         self.templateVars['css'] = v.getCSS()
+        self.templateVars['framework_css'] = v.getFrameworkCSS()
 
         self.upload_file = None
 

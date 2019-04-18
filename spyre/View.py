@@ -20,6 +20,7 @@ class View:
         self.ROOT_DIR = os.path.dirname(os.path.realpath(__file__))
         self.JS_PATH = os.path.join(self.ROOT_DIR, 'public', 'js')
         self.CSS_PATH = os.path.join(self.ROOT_DIR, 'public', 'css')
+        self.CSS_FRAMEWORK_PATH = os.path.join(self.CSS_PATH, 'framework')
         self.APP_PATH = os.path.dirname(os.path.realpath(__main__.__file__))
 
     def getHTML(self):
@@ -31,14 +32,15 @@ class View:
 
     def getJS(self):
         self.JS = ""
-        for file in os.listdir(self.JS_PATH):
+        files = os.listdir(self.JS_PATH)
+        files.sort()
+        for file in files:
             if file.find('.js') > 0:
                 file_path = os.path.join(self.JS_PATH, file)
                 f = codecs.open(file_path, 'rb')
                 content = f.read()
                 f.close()
-                self.JS += content.decode('utf-8')
-                self.JS += "\n"
+                self.JS += "<script>"+content.decode('utf-8')+"</script>\n"
         return self.JS
 
     def getCSS(self):
@@ -52,6 +54,18 @@ class View:
                 self.CSS += content.decode('utf-8')
                 self.CSS += "\n"
         return self.CSS
+
+    def getFrameworkCSS(self):
+        self.FRAMEWORK_CSS = ""
+        for file in os.listdir(self.CSS_FRAMEWORK_PATH):
+            if file.find('.css') > 0:
+                file_path = os.path.join(self.CSS_FRAMEWORK_PATH, file)
+                f = open(file_path, 'rb')
+                content = f.read()
+                f.close()
+                self.FRAMEWORK_CSS += content.decode('utf-8')
+                self.FRAMEWORK_CSS += "\n"
+        return self.FRAMEWORK_CSS
 
     def getSpinningWheel(self, spinnerFile=None):
         buffer = io.BytesIO()
